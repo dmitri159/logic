@@ -41,14 +41,11 @@ $config = [
             'class' => 'yii2mod\cart\Cart'
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
         'urlManager' => [
-            'enablePrettyUrl' => true,
+            'class' => 'yii\web\UrlManager',
             'showScriptName' => false,
-            'rules' => [
-            ],
+            'enablePrettyUrl' => true,
         ],
-        */
     ],
     'params' => $params,
 ];
