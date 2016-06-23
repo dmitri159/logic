@@ -9,7 +9,11 @@ use app\models\Promocode;
 
 class ProductController extends Controller
 {
-    
+    protected static $cartItem = array();
+
+    public function __contruct() {
+        self::$product = new Product();
+    }
 
     public function actionIndex()
     {
@@ -32,27 +36,22 @@ class ProductController extends Controller
     public function actionCart()
     {   
         $post = Yii::$app->request->post();
-        $query = Product::calculateCart($post);
+        if(isset($post['checkout'])) $this->redirect('summary');
+        $selected = array(
+            'country' => null,
+            'promo' => null
+        );
+        if(isset($post['country'])) $selected['country'] = $post['country'];
+        if(isset($post['promocode'])) $selected['promo'] = $post['promocode'];
+        Yii::$app->cart->calculateCart($post);
         $model = Yii::$app->cart->getPositions();
-        /*if ($model) {
-            Yii::$app->cart->put($model, 1);
-            return $this->render('cart',['carts' => $cart]);
-        }
-        throw new NotFoundHttpException();*/
-
-        return $this->render('cart',['carts' => $model, 'post' => $post, 'query' => $query, 'cart_total' => Product::getCartTotal()]);
+        $cartItem = Yii::$app->cart->getCartTotal();
+        return $this->render('cart',['carts' => $model, 'post' => $post, 'cart_total' => $cartItem, 'selected' => $selected]);
+        
     }
 
-    public function actionSummary()
-    {   
-        Yii::$app->cart->removeAll();
-        /*$model = Product::findOne($id);
-        if ($model) {
-            Yii::$app->cart->put($model, 1);
-            return $this->render('cart',['carts' => $cart]);
-        }
-        throw new NotFoundHttpException();*/
-        
-        return $this->render('summary');
+    public function actionSummary()  {
+        $cartItem = Yii::$app->cart->getCartTotal();
+        return $this->render('summary',['cart_total' => $cartItem]);
     }
 }

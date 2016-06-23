@@ -7,4 +7,4 @@ use yii2mod\cart\Cart;
 <h1>Summary</h1>
 
 
-<?php echo \Yii::$app->cart->getCost(); ?>
+<?php print_r($cart_total); ?>

@@ -3,24 +3,28 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 use yii2mod\cart\Cart;
+use yii\helpers\ArrayHelper;
+use app\models\Country;
 ?>
 <h1>Carts</h1>
+<?= Html::beginForm(['product/cart', 'id' => 'cart'], 'post', ['enctype' => 'multipart/form-data']) ?>
 <p><?php if($post) { print_r($post); } ?></p>
-<p><?php if($query) { print_r($query); } ?></p>
-<?php ActiveForm::begin(['id' => 'cart', 'action' => ['product/cart']]); ?>
-<div class="pull-left dropdown">
-	<?= Html::dropDownList('country',null,
-		['1' => 'Malaysia', '2' => 'Singapore', '3' => 'Brunei'],
-		['class' => 'btn btn-primary']) 
-	?>
-</div>
-<div class="pull-right">
-	<?= Html::submitButton('Validate', ['class' => 'btn btn-primary','value' => '1', 'name' => 'validate']) ?>
-</div>
-<div class="pull-right">
-	<?= Html::input('text','promocode','',
-		['class' => 'form-control','placeholder' => 'promocode']) 
-	?>
+<div class="row">
+	<div class="col-lg-4">
+		<div class="input-group dropdown">
+			<?= Html::dropDownList('country',$selected['country'],ArrayHelper::map(Country::find()->all(),'code','name'),
+				['class' => 'btn btn-default dropdown-toggle', 'required' => 'required']) 
+			?>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="input-group">
+		  <?= Html::input('text','promocode',$selected['promo'],['class' => 'form-control','placeholder' => 'promocode']) ?>
+		  <span class="input-group-btn">
+		    <?= Html::submitInput('Validate and Calculate Shipping', ['class' => 'btn btn-primary', 'name' => 'validate']) ?>
+		  </span>
+		</div><!-- /input-group -->
+	</div>
 </div>
 
 <div class="row">
@@ -33,10 +37,16 @@ use yii2mod\cart\Cart;
     	: [<?= $cart['_quantity'] ?>]
 <?php endforeach?>
 <?php Html::hiddenInput('price', \Yii::$app->cart->getCost()); ?>
-<?php ActiveForm::end(); ?>
+
 <?php else: ?>
 	<p>No Item</p>
 <?php endif ?>
 </div>
 </div>
+<div class="row">
+<div class="col-lg-12 pull-left">
+<?= Html::submitInput('Checkout', ['class' => 'btn btn-primary', 'name' => 'checkout']) ?>
+</div>
+</div>
+<?= Html::endForm(); ?>
 <?php print_r($cart_total); ?>
