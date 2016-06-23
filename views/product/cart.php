@@ -5,13 +5,26 @@ use yii\bootstrap\ActiveForm;
 use yii2mod\cart\Cart;
 ?>
 <h1>Carts</h1>
-<?php $form = ActiveForm::begin(['id' => 'cart', 'action' => ['product/cart']]); ?>
-<div class="dropdown">
-	    	<?= Html::dropDownList('country',null,
-	    		['1' => 'Malaysia', '2' => 'Singapore', '3' => 'Brunei'],
-	    		['class' => 'btn btn-primary']) 
-	    	?>
-		</div>
+<p><?php if($post) { print_r($post); } ?></p>
+<p><?php if($query) { print_r($query); } ?></p>
+<?php ActiveForm::begin(['id' => 'cart', 'action' => ['product/cart']]); ?>
+<div class="pull-left dropdown">
+	<?= Html::dropDownList('country',null,
+		['1' => 'Malaysia', '2' => 'Singapore', '3' => 'Brunei'],
+		['class' => 'btn btn-primary']) 
+	?>
+</div>
+<div class="pull-right">
+	<?= Html::submitButton('Validate', ['class' => 'btn btn-primary','value' => '1', 'name' => 'validate']) ?>
+</div>
+<div class="pull-right">
+	<?= Html::input('text','promocode','',
+		['class' => 'form-control','placeholder' => 'promocode']) 
+	?>
+</div>
+
+<div class="row">
+<div class="col-md-12">
 <?php if($carts): ?>
 <?php foreach($carts as $cart): ?> 
 	<?php foreach($cart as $title): ?>
@@ -24,5 +37,6 @@ use yii2mod\cart\Cart;
 <?php else: ?>
 	<p>No Item</p>
 <?php endif ?>
-
-<?php echo \Yii::$app->cart->getCost(); ?>
+</div>
+</div>
+<?php print_r($cart_total); ?>
