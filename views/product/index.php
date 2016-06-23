@@ -24,6 +24,6 @@ use yii\bootstrap\ActiveForm;
         <?php ActiveForm::end(); ?>
     </li>
 <?php endforeach; ?>
-<?php echo \Yii::$app->cart->getCount(); ?>
+<?php echo \Yii::$app->cart->getCost(); ?>
 
 </ul>

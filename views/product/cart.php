@@ -6,8 +6,8 @@ use yii2mod\cart\Cart;
 ?>
 <h1>Carts</h1>
 <?php foreach($carts as $cart): ?> 
-    <?= $cart?>
+    <?php print_r($cart)?>
 
 <?php endforeach?>
 
-<?php echo \yii2mod\cart\widgets\CartGrid::widget(); ?>
+<?php echo \Yii::$app->cart->getCost(); ?>

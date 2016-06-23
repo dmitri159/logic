@@ -23,9 +23,9 @@ class ProductController extends Controller
             $id = Yii::$app->request->post('product');
             $quantity = Yii::$app->request->post('quantity');
             $model = Product::findOne($id);
-            $item = Yii::$app->cart->add($model,$quantity);
-            print_r($item);
-            //$this->redirect('cart');
+            $item = Yii::$app->cart->put($model,$quantity);
+            //print_r($item);
+            $this->redirect('cart');
         }
         return $this->render('index', [
             'products' => $products
@@ -34,7 +34,7 @@ class ProductController extends Controller
 
     public function actionCart()
     {   
-        $model = Yii::$app->cart->getItems();
+        $model = Yii::$app->cart->getPositions();
         /*if ($model) {
             Yii::$app->cart->put($model, 1);
             return $this->render('cart',['carts' => $cart]);

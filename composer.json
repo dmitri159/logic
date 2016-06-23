@@ -18,7 +18,8 @@
         "yiisoft/yii2": ">=2.0.5",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
-        "yii2mod/yii2-cart": "*"
+        "yii2mod/yii2-cart": "*",
+        "omnilight/yii2-shopping-cart": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

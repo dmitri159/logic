@@ -38,7 +38,8 @@ $config = [
             ],
         ],
         'cart' => [
-            'class' => 'yii2mod\cart\Cart'
+            'class' => 'yz\shoppingcart\ShoppingCart',
+            'cartId' => 'my_application_cart',
         ],
         'db' => require(__DIR__ . '/db.php'),
         'urlManager' => [
