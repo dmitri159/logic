@@ -1,8 +1,5 @@
 <?php
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\bootstrap\ActiveForm;
-use yii2mod\cart\Cart;
 use yii\helpers\ArrayHelper;
 use app\models\Country;
 ?>
@@ -36,7 +33,6 @@ use app\models\Country;
 	<?php endforeach ?>
     	: [<?= $cart['_quantity'] ?>]
 <?php endforeach?>
-<?php Html::hiddenInput('price', \Yii::$app->cart->getCost()); ?>
 
 <?php else: ?>
 	<p>No Item</p>
@@ -50,3 +46,20 @@ use app\models\Country;
 </div>
 <?= Html::endForm(); ?>
 <?php print_r($cart_total); ?>
+<div class="row">
+<div class="col-md-4">
+<?= Html::beginForm(['product/removeall', 'id' => 'cart'], 'post', ['enctype' => 'multipart/form-data']) ?>
+<?= Html::submitButton('Remove All', ['class' => 'btn btn-primary btn-block', 'name' => 'remove']) ?>
+<?= Html::endForm(); ?>
+</div>
+<div class="col-md-4">
+<?= Html::beginForm(['product/removeproduct', 'id' => 'cart'], 'post', ['enctype' => 'multipart/form-data']) ?>
+<?= Html::submitButton('Remove Products', ['class' => 'btn btn-primary btn-block', 'name' => 'remove']) ?>
+<?= Html::endForm(); ?>
+</div>
+<div class="col-md-4">
+<?= Html::beginForm(['product/removepromo', 'id' => 'cart'], 'post', ['enctype' => 'multipart/form-data']) ?>
+<?= Html::submitButton('Remove Promo', ['class' => 'btn btn-primary btn-block', 'name' => 'remove']) ?>
+<?= Html::endForm(); ?>
+</div>
+</div>

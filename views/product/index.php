@@ -8,9 +8,9 @@ use yii\bootstrap\ActiveForm;
 
 <?php foreach ($products as $product): ?>
     <li>
-    	<?php ActiveForm::begin(['id' => 'product_'.$product->id, 'action' => ['product/index']]);  
-	    	$img = Url::to('@web/upload'.$product->p_img); 
-    	?>
+    	<?= Html::beginForm(['product/index', 'id' => 'cart'], 'post', ['enctype' => 'multipart/form-data']) ?>
+	    <?php	$img = Url::to('@web/upload'.$product->p_img); ?>
+    	
         <?= $product->p_name ?> _ <strike><?= $product->p_price ?></strike> - <?= $product->p_discount ?> - <?= Html::img($img,['class' => 'img-responsive', 'width' => '50%', 'height' => '50%']) ?>
         <div class="dropdown">
 	    	<?= Html::dropDownList('quantity'.$product->id,null,
@@ -21,9 +21,9 @@ use yii\bootstrap\ActiveForm;
         <div class="form-group">
             <?= Html::submitButton('Add To Cart', ['class' => 'btn btn-primary','value' => $product->id, 'name' => 'product']) ?>
         </div>
-        <?php ActiveForm::end(); ?>
+        <?php Html::endForm(); ?>
     </li>
 <?php endforeach; ?>
-<?php echo \Yii::$app->cart->getCount(); ?>
+<?php print_r($cart_total); ?>
 
 </ul>

@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use Yii;
+use yii;
 use yii\db\ActiveRecord;
 use yz\shoppingcart\CartPositionInterface;
 use yz\shoppingcart\CartPositionTrait;
@@ -11,11 +11,6 @@ class Product extends ActiveRecord implements CartPositionInterface
 {
     use CartPositionTrait;
 
-    public function getLabel()
-    {
-        return $this->p_name;
-    }
-
     public function getId()
     {
         return $this->id;
@@ -23,6 +18,10 @@ class Product extends ActiveRecord implements CartPositionInterface
 
     public function getPrice()
     {
+        return $this->p_discount;
+    }
+
+    public function getRetails() {
         return $this->p_price;
     }
 }

@@ -6,17 +6,18 @@ use yii;
 use yii\web\Controller;
 use app\models\Product;
 use app\models\Promocode;
+use yz\shoppingcart\ShoppingCart;
 
 class ProductController extends Controller
 {
-    protected static $cartItem = array();
-
-    public function __contruct() {
-        self::$product = new Product();
+    protected $cart;
+    protected $final;
+    public function init() {
+        $this->cart = new ShoppingCart();
     }
 
     public function actionIndex()
-    {
+    {   
         $query = Product::find();
         $products = $query->orderBy('id')
         ->all();
@@ -25,11 +26,14 @@ class ProductController extends Controller
             $id = Yii::$app->request->post('product');
             $quantity = Yii::$app->request->post('quantity'.$id);
             $model = Product::findOne($id);
-            $item = Yii::$app->cart->put($model,$quantity);
+            $this->cart->put($model,$quantity);
+            $this->cart->calculate();
             $this->redirect('cart');
         }
+        $cartItem = $this->cart->getCartTotal();
         return $this->render('index', [
-            'products' => $products
+            'products' => $products,
+            'cart_total' => $cartItem
         ]);
     }
 
@@ -43,15 +47,31 @@ class ProductController extends Controller
         );
         if(isset($post['country'])) $selected['country'] = $post['country'];
         if(isset($post['promocode'])) $selected['promo'] = $post['promocode'];
-        Yii::$app->cart->calculateCart($post);
-        $model = Yii::$app->cart->getPositions();
-        $cartItem = Yii::$app->cart->getCartTotal();
-        return $this->render('cart',['carts' => $model, 'post' => $post, 'cart_total' => $cartItem, 'selected' => $selected]);
+        $arr = $this->cart->calculateCart($post);
+        $model = $this->cart->getPositions();
+        $cartItem = $this->cart->getCartTotal();
+        return $this->render('cart',['carts' => $model, 'post' => $post, 'cart_total' => $cartItem, 'selected' => $selected,'message' => $arr]);
         
     }
 
     public function actionSummary()  {
-        $cartItem = Yii::$app->cart->getCartTotal();
-        return $this->render('summary',['cart_total' => $cartItem]);
+        $cartItem = $this->cart->getCartTotal();
+        $model = $this->cart->getPositions();
+        return $this->render('summary',['carts' => $model, 'cart_total' => $cartItem]);
+    }
+
+    public function actionRemoveall() {
+        $this->cart->removeAll();
+        $this->redirect('index');
+    }
+
+    public function actionRemoveproduct() {
+        $this->cart->removeProduct();
+        $this->redirect('index');
+    }
+
+    public function actionRemovepromo() {
+        $this->cart->removePromo();
+        $this->redirect('cart');
     }
 }
