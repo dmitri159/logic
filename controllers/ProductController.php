@@ -23,9 +23,9 @@ class ProductController extends Controller
             $id = Yii::$app->request->post('product');
             $quantity = Yii::$app->request->post('quantity');
             $model = Product::findOne($id);
-            Yii::$app->cart->add($model,$quantity);
-            unset($_POST['product']);
-            unset($_POST['quantity']);
+            $item = Yii::$app->cart->add($model,$quantity);
+            print_r($item);
+            //$this->redirect('cart');
         }
         return $this->render('index', [
             'products' => $products
@@ -46,7 +46,6 @@ class ProductController extends Controller
 
     public function actionSummary()
     {   
-        $id = Yii::$app->request->post('product');
         /*$model = Product::findOne($id);
         if ($model) {
             Yii::$app->cart->put($model, 1);
@@ -54,6 +53,6 @@ class ProductController extends Controller
         }
         throw new NotFoundHttpException();*/
         
-        return $this->render('cart',['carts' => $id]);
+        return $this->render('summary');
     }
 }

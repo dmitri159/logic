@@ -10,12 +10,12 @@ class Product extends ActiveRecord implements CartItemInterface
 
     public function getPrice()
     {
-        return $this->price;
+        return $this->p_discount;
     }
 
     public function getLabel()
     {
-        return $this->name;
+        return $this->p_name;
     }
 
     public function getId()
