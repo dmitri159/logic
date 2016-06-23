@@ -21,6 +21,11 @@ use app\models\Country;
 		    <?= Html::submitInput('Validate and Calculate Shipping', ['class' => 'btn btn-primary', 'name' => 'validate']) ?>
 		  </span>
 		</div><!-- /input-group -->
+		<?php if($message['message'] && $message['error']): ?>
+			<div class="alert alert-warning" role="alert"><?= $message['message'] ?></div>
+		<?php elseif($message['message'] && !$message['error']): ?>
+			<div class="alert alert-success" role="alert"><?= $message['message'] ?></div>
+		<?php endif ?>
 	</div>
 </div>
 
