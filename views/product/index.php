@@ -28,4 +28,4 @@ use yii\bootstrap\ActiveForm;
         <?php Html::endForm(); ?>
         </div>
 <?php endforeach; ?>
-<?php print_r($cart_total); ?>
+</div>
