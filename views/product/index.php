@@ -8,7 +8,7 @@ use yii\bootstrap\ActiveForm;
 
 <?php foreach ($products as $product): ?>
     <li>
-    	<?php $form = ActiveForm::begin(['id' => 'product_'.$product->id, 'action' => ['product/index']]);  
+    	<?php ActiveForm::begin(['id' => 'product_'.$product->id, 'action' => ['product/index']]);  
 	    	$img = Url::to('@web/upload'.$product->p_img); 
     	?>
         <?= $product->p_name ?> _ <strike><?= $product->p_price ?></strike> - <?= $product->p_discount ?> - <?= Html::img($img,['class' => 'img-responsive', 'width' => '50%', 'height' => '50%']) ?>
