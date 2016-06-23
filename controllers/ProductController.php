@@ -48,6 +48,8 @@ class ProductController extends Controller
         if(isset($post['country'])) $selected['country'] = $post['country'];
         if(isset($post['promocode'])) $selected['promo'] = $post['promocode'];
         $arr = $this->cart->calculateCart($post);
+        if(isset($arr['country'])) $selected['country'] = $arr['country'];
+        if(isset($arr['promocode'])) $selected['promo'] = $arr['promocode'];
         $model = $this->cart->getPositions();
         $cartItem = $this->cart->getCartTotal();
         return $this->render('cart',['carts' => $model, 'post' => $post, 'cart_total' => $cartItem, 'selected' => $selected,'message' => $arr]);

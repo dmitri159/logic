@@ -458,7 +458,6 @@ class ShoppingCart extends Component
         $error = false;
         if(isset($post)) {
             if(isset($post['checkout'])) {
-ss
             }
             else if(isset($post['validate'])) {
                 if(isset($post['promocode'])) {
@@ -543,6 +542,7 @@ ss
                 }
             }
         }
+        if($this->_totalAfter)
         $this->_total = $this->_totalAfter + $this->_shipping;
         $this->trigger(self::EVENT_CART_CHANGE, new CartActionEvent([
             'action' => CartActionEvent::ACTION_CALCULATE,
@@ -551,7 +551,9 @@ ss
             $this->saveToSession();
         return array(
             'message' => $message,
-            'error' => $error
+            'error' => $error,
+            'promocode' => $this->_promocode,
+            'country' => $this->_country
         );
     }
 
