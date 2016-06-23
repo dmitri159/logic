@@ -21,11 +21,10 @@ class ProductController extends Controller
         $post = Yii::$app->request->post();
         if(isset($post['product'])) {
             $id = Yii::$app->request->post('product');
-            $quantity = Yii::$app->request->post('quantity');
+            $quantity = Yii::$app->request->post('quantity'.$id);
             $model = Product::findOne($id);
             $item = Yii::$app->cart->put($model,$quantity);
-            //print_r($item);
-            $this->redirect('cart');
+            //$this->redirect('cart');
         }
         return $this->render('index', [
             'products' => $products
@@ -46,6 +45,7 @@ class ProductController extends Controller
 
     public function actionSummary()
     {   
+        Yii::$app->cart->removeAll();
         /*$model = Product::findOne($id);
         if ($model) {
             Yii::$app->cart->put($model, 1);
