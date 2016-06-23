@@ -11,14 +11,6 @@ class Product extends ActiveRecord implements CartPositionInterface
 
     use CartPositionTrait;
 
-    public function getCost($withDiscount = true)
-    {
-        if($withDiscount)
-        return $this->p_discount;
-        else
-        return $this->p_price;
-    }
-
     public function getLabel()
     {
         return $this->p_name;
